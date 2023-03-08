@@ -22,20 +22,19 @@ class AdaptiveActionButton extends StatelessWidget {
     final theme = SmartBannerTheme.of(context);
 
     if (style.isAndroid(context)) {
-      return ElevatedButton(
-        onPressed: _handleOnPressed,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: theme.buttonTextStyle.backgroundColor,
-          elevation: 0,
-          padding: const EdgeInsets.all(10),
-          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15))),
+      return DecoratedBox(
+        decoration: BoxDecoration(
+          color: theme.buttonTextStyle.backgroundColor,
+          borderRadius: const BorderRadius.all(Radius.circular(13)),
         ),
-        child: Text(
-          label,
-          style: theme.buttonTextStyle.copyWith(
-            backgroundColor: Colors.white,
-          ),
-        ),
+        child: TextButton(
+            onPressed: _handleOnPressed,
+            child: Text(
+              label,
+              style: theme.buttonTextStyle.copyWith(
+                backgroundColor: Colors.white,
+              ),
+            )),
       );
     }
 

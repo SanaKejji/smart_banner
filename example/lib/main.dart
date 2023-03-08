@@ -53,13 +53,13 @@ class MyApp extends StatelessWidget {
               androidProperties: BannerPropertiesAndroid(
                 packageName: 'com.facebook.katana',
                 storeText: 'In Google Play',
-                priceText: 'Free',
+                priceText: 'Freeeeeeeeeeeee',
                 icon: icon,
               ),
               iosProperties: BannerPropertiesIOS(
                 appId: '284882215',
                 storeText: 'On the App Store',
-                priceText: 'Free',
+                priceText: 'Freeeeeeeeeeee',
                 icon: icon,
               ),
             ),
