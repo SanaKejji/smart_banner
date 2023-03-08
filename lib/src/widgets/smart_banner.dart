@@ -55,7 +55,7 @@ class SmartBanner extends StatelessWidget {
             AdaptiveCloseButton(onClose: properties.onClose),
             const SizedBox(width: 5),
             ConstrainedBox(
-              constraints: const BoxConstraints(maxHeight: 60, maxWidth: 60),
+              constraints: const BoxConstraints(maxHeight: 70, maxWidth: 60),
               child: platformProperties.icon,
             ),
             const SizedBox(width: 12),

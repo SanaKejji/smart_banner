@@ -21,28 +21,19 @@ class AdaptiveActionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = SmartBannerTheme.of(context);
 
-    if (style.isAndroid(context)) {
-      return DecoratedBox(
-        decoration: BoxDecoration(
-          color: theme.buttonTextStyle.backgroundColor,
-          borderRadius: const BorderRadius.all(Radius.circular(13)),
+    return DecoratedBox(
+      decoration: const BoxDecoration(
+        color: Colors.lightBlue,
+        borderRadius: BorderRadius.all(Radius.circular(15)),
+      ),
+      child: TextButton(
+        onPressed: _handleOnPressed,
+        child: Text(
+          label,
+          style: theme.buttonTextStyle.copyWith(
+            color: Colors.white,
+          ),
         ),
-        child: TextButton(
-            onPressed: _handleOnPressed,
-            child: Text(
-              label,
-              style: theme.buttonTextStyle.copyWith(
-                backgroundColor: Colors.white,
-              ),
-            )),
-      );
-    }
-
-    return TextButton(
-      onPressed: _handleOnPressed,
-      child: Text(
-        label,
-        style: theme.buttonTextStyle,
       ),
     );
   }
