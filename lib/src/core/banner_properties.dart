@@ -41,11 +41,13 @@ class BannerProperties {
 
     switch (style) {
       case BannerStyle.adaptive:
-        return targetPlatform.isAndroid ? androidProperties : iosProperties;
+        return targetPlatform.isAndroid ? iosProperties : androidProperties;
       case BannerStyle.android:
         return androidProperties;
       case BannerStyle.ios:
         return iosProperties;
+      default:
+        return androidProperties;
     }
   }
 }
@@ -71,8 +73,7 @@ class BannerPropertiesAndroid extends SmartBannerProperties {
     super.url,
   }) : super(
           appId: packageName,
-          storeTemplateUrl:
-              'https://play.google.com/store/apps/details?id={appId}&hl={lang}',
+          storeTemplateUrl: 'https://play.google.com/store/apps/details?id={appId}&hl={lang}',
         );
 
   String get packageName => appId;
@@ -116,8 +117,6 @@ abstract class SmartBannerProperties {
   final Widget icon;
 
   String createStoreUrl(String lang) {
-    return _storeTemplateUrl
-        .replaceFirst('{lang}', lang)
-        .replaceFirst('{appId}', appId);
+    return _storeTemplateUrl.replaceFirst('{lang}', lang).replaceFirst('{appId}', appId);
   }
 }

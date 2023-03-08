@@ -17,6 +17,8 @@ extension PlatformStyleExtension on BannerStyle {
         return true;
       case BannerStyle.ios:
         return false;
+      default:
+        return true;
     }
   }
 }
