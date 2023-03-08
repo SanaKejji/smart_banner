@@ -23,8 +23,8 @@ class SmartBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = SmartBannerTheme.of(context);
-    final effectiveLang = properties.appStoreLanguage ??
-        Localizations.localeOf(context).languageCode;
+    final effectiveLang =
+        properties.appStoreLanguage ?? Localizations.localeOf(context).languageCode;
 
     final platformProperties = properties.getPropertiesFromStyle(
       context,
@@ -55,7 +55,7 @@ class SmartBanner extends StatelessWidget {
             AdaptiveCloseButton(onClose: properties.onClose),
             const SizedBox(width: 5),
             ConstrainedBox(
-              constraints: const BoxConstraints(maxHeight: 57, maxWidth: 57),
+              constraints: const BoxConstraints(maxHeight: 60, maxWidth: 60),
               child: platformProperties.icon,
             ),
             const SizedBox(width: 12),
