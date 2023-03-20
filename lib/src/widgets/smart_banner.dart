@@ -8,7 +8,7 @@ import 'package:smart_banner/src/widgets/adaptive_action_button.dart';
 import 'package:smart_banner/src/widgets/adaptive_close_button.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
-const kBannerHeight = 80.0;
+const kBannerHeight = 150.0;
 
 class SmartBanner extends StatelessWidget {
   const SmartBanner({
@@ -56,100 +56,103 @@ class SmartBanner extends StatelessWidget {
                 author: properties.author,
               ),
             ),
-            if (targetPlatform.isAndroid || targetPlatform.isDesktop)
-              GestureDetector(
-                onTap: () {
-                  _handleOnPressed(
-                      storeUrl: properties.androidProperties.createStoreUrl(effectiveLang),
-                      url: properties.androidProperties.url);
-                },
-                child: Container(
-                  height: 60,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.black,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Row(
-                      children: [
-                        Image.asset(
-                          'assets/play-store-logo.png',
-                          package: 'smart_banner',
-                          height: 30,
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            Text(
-                              'GET IT ON',
-                              style: TextStyle(color: Colors.white, fontSize: 10),
-                            ),
-                            Text(
-                              'Google Play',
-                              style: TextStyle(
-                                  color: Colors.white, fontSize: 15, fontWeight: FontWeight.w800),
-                            )
-                          ],
-                        )
-                      ],
+            Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              if (targetPlatform.isAndroid || targetPlatform.isDesktop)
+                GestureDetector(
+                  onTap: () {
+                    _handleOnPressed(
+                        storeUrl: properties.androidProperties.createStoreUrl(effectiveLang),
+                        url: properties.androidProperties.url);
+                  },
+                  child: Container(
+                    height: 60,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.black,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Row(
+                        children: [
+                          Image.asset(
+                            'assets/play-store-logo.png',
+                            package: 'smart_banner',
+                            height: 30,
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              Text(
+                                'GET IT ON',
+                                style: TextStyle(color: Colors.white, fontSize: 10),
+                              ),
+                              Text(
+                                'Google Play',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 15, fontWeight: FontWeight.w800),
+                              )
+                            ],
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            if (targetPlatform.isAndroid || targetPlatform.isDesktop)
-              const SizedBox(
-                width: 5,
-              ),
-            if (targetPlatform.isIOS || targetPlatform.isDesktop)
-              GestureDetector(
-                onTap: () {
-                  _handleOnPressed(
+              if (targetPlatform.isAndroid || targetPlatform.isDesktop)
+                const SizedBox(
+                  width: 5,
+                ),
+              if (targetPlatform.isIOS || targetPlatform.isDesktop)
+                GestureDetector(
+                  onTap: () {
+                    _handleOnPressed(
                       storeUrl: properties.iosProperties.createStoreUrl(effectiveLang),
-                      url: properties.iosProperties.url);
-                },
-                child: Container(
-                  height: 60,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.black,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Row(
-                      children: [
-                        Image.asset(
-                          'assets/apple.png',
-                          package: 'smart_banner',
-                          height: 30,
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            Text(
-                              'Download on the',
-                              style: TextStyle(color: Colors.white, fontSize: 10),
-                            ),
-                            Text(
-                              'App Store',
-                              style: TextStyle(
-                                  color: Colors.white, fontSize: 15, fontWeight: FontWeight.w800),
-                            )
-                          ],
-                        )
-                      ],
+                      url: properties.iosProperties.url,
+                    );
+                  },
+                  child: Container(
+                    height: 60,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.black,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Row(
+                        children: [
+                          Image.asset(
+                            'assets/apple.png',
+                            package: 'smart_banner',
+                            height: 30,
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              Text(
+                                'Download on the',
+                                style: TextStyle(color: Colors.white, fontSize: 10),
+                              ),
+                              Text(
+                                'App Store',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 15, fontWeight: FontWeight.w800),
+                              )
+                            ],
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
+            ])
           ],
         ),
       ),
