@@ -26,4 +26,5 @@ dev_dependencies:
 
 flutter:
   assets:
-    - assets/background.png
+    - assets/play-store-logo.png
+    - assets/apple.png

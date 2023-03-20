@@ -3,8 +3,10 @@ import 'package:smart_banner/src/core/banner_properties.dart';
 import 'package:smart_banner/src/core/banner_style.dart';
 import 'package:smart_banner/src/theme/theme.dart';
 import 'package:smart_banner/src/utils/separated_text_span.dart';
+import 'package:smart_banner/src/utils/target_platform_extension.dart';
 import 'package:smart_banner/src/widgets/adaptive_action_button.dart';
 import 'package:smart_banner/src/widgets/adaptive_close_button.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 const kBannerHeight = 80.0;
 
@@ -30,6 +32,7 @@ class SmartBanner extends StatelessWidget {
       context,
       style,
     );
+    final targetPlatform = Theme.of(context).platform;
 
     return Material(
       color: theme.backgroundColor,
@@ -39,17 +42,6 @@ class SmartBanner extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 10),
         height: kBannerHeight,
         width: double.maxFinite,
-        decoration: style.isAndroid(context)
-            ? const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(
-                    'assets/background.png',
-                    package: 'smart_banner',
-                  ),
-                  repeat: ImageRepeat.repeat,
-                ),
-              )
-            : null,
         child: Row(
           children: [
             AdaptiveCloseButton(onClose: properties.onClose),
@@ -57,19 +49,107 @@ class SmartBanner extends StatelessWidget {
             platformProperties.icon,
             const SizedBox(width: 12),
             Expanded(
-              child: _TitleAndDecription(
+              child: _TitleAndDescription(
                 title: properties.title,
                 store: platformProperties.storeText,
                 price: platformProperties.priceText,
                 author: properties.author,
               ),
             ),
-            AdaptiveActionButton(
-              style: style,
-              label: properties.buttonLabel,
-              url: platformProperties.url,
-              storeUrl: platformProperties.createStoreUrl(effectiveLang),
-            ),
+            if (targetPlatform.isAndroid || targetPlatform.isDesktop)
+              GestureDetector(
+                onTap: () {
+                  _handleOnPressed(
+                      storeUrl: properties.androidProperties.createStoreUrl(effectiveLang),
+                      url: properties.androidProperties.url);
+                },
+                child: Container(
+                  height: 60,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.black,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Row(
+                      children: [
+                        Image.asset(
+                          'assets/play-store-logo.png',
+                          package: 'smart_banner',
+                          height: 30,
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            Text(
+                              'GET IT ON',
+                              style: TextStyle(color: Colors.white, fontSize: 10),
+                            ),
+                            Text(
+                              'Google Play',
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 15, fontWeight: FontWeight.w800),
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            if (targetPlatform.isAndroid || targetPlatform.isDesktop)
+              const SizedBox(
+                width: 5,
+              ),
+            if (targetPlatform.isIOS || targetPlatform.isDesktop)
+              GestureDetector(
+                onTap: () {
+                  _handleOnPressed(
+                      storeUrl: properties.iosProperties.createStoreUrl(effectiveLang),
+                      url: properties.iosProperties.url);
+                },
+                child: Container(
+                  height: 60,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.black,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Row(
+                      children: [
+                        Image.asset(
+                          'assets/apple.png',
+                          package: 'smart_banner',
+                          height: 30,
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            Text(
+                              'Download on the',
+                              style: TextStyle(color: Colors.white, fontSize: 10),
+                            ),
+                            Text(
+                              'App Store',
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 15, fontWeight: FontWeight.w800),
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
           ],
         ),
       ),
@@ -77,8 +157,22 @@ class SmartBanner extends StatelessWidget {
   }
 }
 
-class _TitleAndDecription extends StatelessWidget {
-  const _TitleAndDecription({
+Future<void> _handleOnPressed({String? url, required String storeUrl}) async {
+  final localUrl = url;
+  if (localUrl != null) {
+    final canLaunch = await canLaunchUrlString(localUrl);
+    if (canLaunch) {
+      await launchUrlString(localUrl);
+    } else {
+      await launchUrlString(storeUrl);
+    }
+  } else {
+    await launchUrlString(storeUrl);
+  }
+}
+
+class _TitleAndDescription extends StatelessWidget {
+  const _TitleAndDescription({
     required this.title,
     required this.price,
     required this.store,

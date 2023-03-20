@@ -21,6 +21,8 @@ class BannerProperties {
 
   final BannerPropertiesAndroid androidProperties;
   final BannerPropertiesIOS iosProperties;
+  BannerPropertiesIOSAndroid get iosAndroidProperties =>
+      BannerPropertiesIOSAndroid(androidProperties, iosProperties);
 
   /// App author.
   final String? author;
@@ -77,6 +79,12 @@ class BannerPropertiesAndroid extends SmartBannerProperties {
         );
 
   String get packageName => appId;
+}
+
+class BannerPropertiesIOSAndroid {
+  BannerPropertiesIOSAndroid(this.androidProperties, this.iosProperties);
+  final BannerPropertiesAndroid? androidProperties;
+  final BannerPropertiesIOS? iosProperties;
 }
 
 /// Class that represents the properties supported by the banner.
