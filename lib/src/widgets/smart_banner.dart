@@ -8,7 +8,7 @@ import 'package:smart_banner/src/widgets/adaptive_action_button.dart';
 import 'package:smart_banner/src/widgets/adaptive_close_button.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
-const kBannerHeight = 150.0;
+// const kBannerHeight = 150.0;
 
 class SmartBanner extends StatelessWidget {
   const SmartBanner({
@@ -40,7 +40,7 @@ class SmartBanner extends StatelessWidget {
       elevation: 1,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10),
-        height: kBannerHeight,
+        height: (targetPlatform.isAndroid || targetPlatform.isIOS) ? 90 : 150,
         width: double.maxFinite,
         child: Row(
           children: [

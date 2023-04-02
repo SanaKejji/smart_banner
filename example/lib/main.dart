@@ -40,8 +40,12 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       builder: (context, child) {
         if (child != null) {
-          final icon = Image.network(
-            'https://upload.wikimedia.org/wikipedia/commons/c/cd/Facebook_logo_%28square%29.png',
+          final icon = SizedBox(
+            height: 85,
+            width: 85,
+            child: Image.network(
+              'https://upload.wikimedia.org/wikipedia/commons/c/cd/Facebook_logo_%28square%29.png',
+            ),
           );
 
           return SmartBannerScaffold(

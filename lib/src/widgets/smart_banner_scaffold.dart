@@ -5,6 +5,7 @@ import 'package:smart_banner/src/core/banner_properties.dart';
 import 'package:smart_banner/src/core/banner_style.dart';
 import 'package:smart_banner/src/theme/theme.dart';
 import 'package:smart_banner/src/theme/theme_data.dart';
+import 'package:smart_banner/src/utils/target_platform_extension.dart';
 import 'package:smart_banner/src/widgets/smart_banner.dart';
 
 const _kAnimationDuration = Duration(milliseconds: 300);
@@ -40,14 +41,12 @@ class SmartBannerScaffold extends StatefulWidget {
   State<SmartBannerScaffold> createState() => SmartBannerScaffoldState();
 
   static SmartBannerScaffoldState of(BuildContext context) {
-    final inheritedWidget =
-        context.dependOnInheritedWidgetOfExactType<_SmartBannerScope>();
+    final inheritedWidget = context.dependOnInheritedWidgetOfExactType<_SmartBannerScope>();
     return inheritedWidget!.state;
   }
 
   static SmartBannerScaffoldState? maybeOf(BuildContext context) {
-    final inheritedWidget =
-        context.dependOnInheritedWidgetOfExactType<_SmartBannerScope>();
+    final inheritedWidget = context.dependOnInheritedWidgetOfExactType<_SmartBannerScope>();
     return inheritedWidget?.state;
   }
 
@@ -60,17 +59,14 @@ class SmartBannerScaffold extends StatefulWidget {
   }
 }
 
-class SmartBannerScaffoldState extends State<SmartBannerScaffold>
-    with TickerProviderStateMixin {
+class SmartBannerScaffoldState extends State<SmartBannerScaffold> with TickerProviderStateMixin {
   late final _animationController = AnimationController(
     vsync: this,
     duration: widget.animationDuration,
   );
   late final _offsetAnimation = Tween<Offset>(
     begin: Offset.zero,
-    end: widget.position == BannerPosition.top
-        ? const Offset(0, -1)
-        : const Offset(0, 1),
+    end: widget.position == BannerPosition.top ? const Offset(0, -1) : const Offset(0, 1),
   ).animate(
     CurvedAnimation(
       parent: _animationController,
@@ -87,21 +83,23 @@ class SmartBannerScaffoldState extends State<SmartBannerScaffold>
   @override
   Widget build(BuildContext context) {
     if (!kIsWeb) return widget.child;
+    final targetPlatform = Theme.of(context).platform;
 
     final effectiveTheme = _getEffectiveTheme();
     final children = <Widget>[
       AnimatedBuilder(
         animation: _offsetAnimation,
         builder: (context, _) {
-          double offset = kBannerHeight * _offsetAnimation.value.dy;
+          double offset = ((targetPlatform.isAndroid || targetPlatform.isIOS) ? 90 : 150) *
+              _offsetAnimation.value.dy;
           if (offset < 0) offset *= -1;
-          final height = kBannerHeight - offset;
+          final height = ((targetPlatform.isAndroid || targetPlatform.isIOS) ? 90 : 150) - offset;
 
           return SizedBox(
-            height: height,
+            height: (targetPlatform.isAndroid || targetPlatform.isIOS) ? 90 : 150,
             child: SingleChildScrollView(
               child: SizedBox(
-                height: kBannerHeight,
+                height: (targetPlatform.isAndroid || targetPlatform.isIOS) ? 90 : 150,
                 child: SmartBanner(
                   properties: widget.properties,
                   style: widget.style,
@@ -111,17 +109,16 @@ class SmartBannerScaffoldState extends State<SmartBannerScaffold>
           );
         },
       ),
-      Expanded(child: widget.child),
+      SizedBox(height: MediaQuery.of(context).size.height, child: widget.child),
     ];
 
     return _SmartBannerScope(
       state: this,
       child: SmartBannerTheme(
         data: effectiveTheme,
-        child: Column(
-          children: widget.position == BannerPosition.top
-              ? children
-              : children.reversed.toList(),
+        child: ListView(
+          shrinkWrap: true,
+          children: widget.position == BannerPosition.top ? children : children.reversed.toList(),
         ),
       ),
     );
