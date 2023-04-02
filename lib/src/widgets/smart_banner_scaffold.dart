@@ -96,7 +96,7 @@ class SmartBannerScaffoldState extends State<SmartBannerScaffold> with TickerPro
           final height = ((targetPlatform.isAndroid || targetPlatform.isIOS) ? 90 : 150) - offset;
 
           return SizedBox(
-            height: (targetPlatform.isAndroid || targetPlatform.isIOS) ? 90 : 150,
+            height: height,
             child: SingleChildScrollView(
               child: SizedBox(
                 height: (targetPlatform.isAndroid || targetPlatform.isIOS) ? 90 : 150,
