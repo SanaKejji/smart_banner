@@ -41,12 +41,14 @@ class SmartBannerScaffold extends StatefulWidget {
   State<SmartBannerScaffold> createState() => SmartBannerScaffoldState();
 
   static SmartBannerScaffoldState of(BuildContext context) {
-    final inheritedWidget = context.dependOnInheritedWidgetOfExactType<_SmartBannerScope>();
+    final inheritedWidget =
+        context.dependOnInheritedWidgetOfExactType<_SmartBannerScope>();
     return inheritedWidget!.state;
   }
 
   static SmartBannerScaffoldState? maybeOf(BuildContext context) {
-    final inheritedWidget = context.dependOnInheritedWidgetOfExactType<_SmartBannerScope>();
+    final inheritedWidget =
+        context.dependOnInheritedWidgetOfExactType<_SmartBannerScope>();
     return inheritedWidget?.state;
   }
 
@@ -59,14 +61,18 @@ class SmartBannerScaffold extends StatefulWidget {
   }
 }
 
-class SmartBannerScaffoldState extends State<SmartBannerScaffold> with TickerProviderStateMixin {
+class SmartBannerScaffoldState extends State<SmartBannerScaffold>
+    with TickerProviderStateMixin {
   late final _animationController = AnimationController(
     vsync: this,
     duration: widget.animationDuration,
+    value: 1,
   );
   late final _offsetAnimation = Tween<Offset>(
     begin: Offset.zero,
-    end: widget.position == BannerPosition.top ? const Offset(0, -1) : const Offset(0, 1),
+    end: widget.position == BannerPosition.top
+        ? const Offset(0, -1)
+        : const Offset(0, 1),
   ).animate(
     CurvedAnimation(
       parent: _animationController,
@@ -90,16 +96,21 @@ class SmartBannerScaffoldState extends State<SmartBannerScaffold> with TickerPro
       AnimatedBuilder(
         animation: _offsetAnimation,
         builder: (context, _) {
-          double offset = ((targetPlatform.isAndroid || targetPlatform.isIOS) ? 90 : 150) *
-              _offsetAnimation.value.dy;
+          double offset =
+              ((targetPlatform.isAndroid || targetPlatform.isIOS) ? 90 : 150) *
+                  _offsetAnimation.value.dy;
           if (offset < 0) offset *= -1;
-          final height = ((targetPlatform.isAndroid || targetPlatform.isIOS) ? 90 : 150) - offset;
+          final height =
+              ((targetPlatform.isAndroid || targetPlatform.isIOS) ? 90 : 150) -
+                  offset;
 
           return SizedBox(
             height: height,
             child: SingleChildScrollView(
               child: SizedBox(
-                height: (targetPlatform.isAndroid || targetPlatform.isIOS) ? 90 : 150,
+                height: (targetPlatform.isAndroid || targetPlatform.isIOS)
+                    ? 90
+                    : 150,
                 child: SmartBanner(
                   properties: widget.properties,
                   style: widget.style,
@@ -118,7 +129,9 @@ class SmartBannerScaffoldState extends State<SmartBannerScaffold> with TickerPro
         data: effectiveTheme,
         child: ListView(
           shrinkWrap: true,
-          children: widget.position == BannerPosition.top ? children : children.reversed.toList(),
+          children: widget.position == BannerPosition.top
+              ? children
+              : children.reversed.toList(),
         ),
       ),
     );

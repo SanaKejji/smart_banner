@@ -4,7 +4,6 @@ import 'package:smart_banner/src/core/banner_style.dart';
 import 'package:smart_banner/src/theme/theme.dart';
 import 'package:smart_banner/src/utils/separated_text_span.dart';
 import 'package:smart_banner/src/utils/target_platform_extension.dart';
-import 'package:smart_banner/src/widgets/adaptive_action_button.dart';
 import 'package:smart_banner/src/widgets/adaptive_close_button.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -25,8 +24,8 @@ class SmartBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = SmartBannerTheme.of(context);
-    final effectiveLang =
-        properties.appStoreLanguage ?? Localizations.localeOf(context).languageCode;
+    final effectiveLang = properties.appStoreLanguage ??
+        Localizations.localeOf(context).languageCode;
 
     final platformProperties = properties.getPropertiesFromStyle(
       context,
@@ -61,7 +60,8 @@ class SmartBanner extends StatelessWidget {
                 GestureDetector(
                   onTap: () {
                     _handleOnPressed(
-                        storeUrl: properties.androidProperties.createStoreUrl(effectiveLang),
+                        storeUrl: properties.androidProperties
+                            .createStoreUrl(effectiveLang),
                         url: properties.androidProperties.url);
                   },
                   child: Container(
@@ -88,12 +88,15 @@ class SmartBanner extends StatelessWidget {
                             children: const [
                               Text(
                                 'GET IT ON',
-                                style: TextStyle(color: Colors.white, fontSize: 10),
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 10),
                               ),
                               Text(
                                 'Google Play',
                                 style: TextStyle(
-                                    color: Colors.white, fontSize: 15, fontWeight: FontWeight.w800),
+                                    color: Colors.white,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w800),
                               )
                             ],
                           )
@@ -110,7 +113,8 @@ class SmartBanner extends StatelessWidget {
                 GestureDetector(
                   onTap: () {
                     _handleOnPressed(
-                      storeUrl: properties.iosProperties.createStoreUrl(effectiveLang),
+                      storeUrl: properties.iosProperties
+                          .createStoreUrl(effectiveLang),
                       url: properties.iosProperties.url,
                     );
                   },
@@ -138,12 +142,15 @@ class SmartBanner extends StatelessWidget {
                             children: const [
                               Text(
                                 'Download on the',
-                                style: TextStyle(color: Colors.white, fontSize: 10),
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 10),
                               ),
                               Text(
                                 'App Store',
                                 style: TextStyle(
-                                    color: Colors.white, fontSize: 15, fontWeight: FontWeight.w800),
+                                    color: Colors.white,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w800),
                               )
                             ],
                           )
